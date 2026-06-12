@@ -1,0 +1,207 @@
+.page {
+  min-height: 100vh;
+  padding: 2.5rem 1.25rem;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.headerRow h1 {
+  font-size: 1.375rem;
+  margin-bottom: 0.2rem;
+  color: var(--text-primary);
+}
+
+.headerRow p {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-family: 'DM Mono', monospace;
+}
+
+.newBtn {
+  background: var(--text-primary);
+  color: var(--bg);
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+
+.newBtn:hover { opacity: 0.8; }
+
+.toast {
+  background: var(--flag-green-bg);
+  border: 1px solid var(--flag-green);
+  color: var(--flag-green-text);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+}
+
+.empty {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+.card.all_clear::before { background: var(--flag-green); }
+.card.heads_up::before { background: var(--flag-amber); }
+.card.needs_attention::before { background: var(--flag-red); }
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.flagPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.flagPill.all_clear { background: var(--flag-green-bg); color: var(--flag-green-text); }
+.flagPill.heads_up { background: var(--flag-amber-bg); color: var(--flag-amber-text); }
+.flagPill.needs_attention { background: var(--flag-red-bg); color: var(--flag-red-text); }
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
+}
+
+.flagPill.all_clear .dot { background: var(--flag-green); }
+.flagPill.heads_up .dot { background: var(--flag-amber); }
+.flagPill.needs_attention .dot { background: var(--flag-red); }
+
+.meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: 'DM Mono', monospace;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+.sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sectionLabel {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.sectionText {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.summarizeBtn {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.summarizeBtn:hover {
+  background: var(--surface-subtle);
+  border-color: var(--border-strong);
+}
+
+.summaryBox {
+  background: var(--surface-subtle);
+  border-radius: 0 6px 6px 0;
+  padding: 11px 14px;
+  border-left: 3px solid var(--border-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.summaryText {
+  font-size: 0.825rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .headerRow { flex-direction: column; }
+  .newBtn { width: 100%; text-align: center; }
+  .sections { grid-template-columns: 1fr; }
+}
