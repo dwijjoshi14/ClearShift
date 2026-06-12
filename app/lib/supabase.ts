@@ -21,7 +21,3 @@ export function getSupabase() {
   _client = createClient(url, key)
   return _client
 }
-
-export const supabase = {
-  from: (...args: Parameters<SupabaseClient['from']>) => getSupabase().from(...args)
-}

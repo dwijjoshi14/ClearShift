@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/app/lib/supabase'
+import { getSupabase } from '@/app/lib/supabase'
 import styles from './page.module.css'
 
 const STATUS_OPTIONS = [
@@ -32,7 +32,7 @@ export default function NewHandoff() {
     setLoading(true)
     setError('')
 
-    const { error: sbError } = await supabase
+    const { error: sbError } = await getSupabase()
       .from('handoffs')
       .insert({
         staff_name: staffName.trim(),

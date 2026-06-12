@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { supabase, Handoff, FlagLevel } from '@/app/lib/supabase'
+import { getSupabase, Handoff, FlagLevel } from '@/app/lib/supabase'
 import styles from './page.module.css'
 
 const FLAG_LABELS: Record<FlagLevel, string> = {
@@ -42,7 +42,7 @@ export default function HandoffList() {
 
   useEffect(() => {
     async function load() {
-      const { data, error } = await supabase
+      const { data, error } = await getSupabase()
         .from('handoffs')
         .select('*')
         .order('shift_date', { ascending: false })
