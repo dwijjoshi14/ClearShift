@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 export type FlagLevel = 'all_clear' | 'heads_up' | 'needs_attention'
 
@@ -12,15 +12,16 @@ export interface Handoff {
   flag_level: FlagLevel
 }
 
-function getSupabaseClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+let _client: SupabaseClient | null = null
 
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Missing Supabase environment variables')
-  }
-
-  return createClient(supabaseUrl, supabaseAnonKey)
+export function getSupabase() {
+  if (_client) return _client
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  _client = createClient(url, key)
+  return _client
 }
 
-export const supabase = getSupabaseClient()
+export const supabase = {
+  from: (...args: Parameters<SupabaseClient['from']>) => getSupabase().from(...args)
+}
