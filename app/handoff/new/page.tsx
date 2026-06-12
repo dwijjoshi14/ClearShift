@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getSupabase } from '@/app/lib/supabase'
 import styles from './page.module.css'
@@ -13,7 +13,7 @@ const STATUS_OPTIONS = [
   { value: 'needs_attention', label: 'Needs attention', description: 'Urgent item the incoming person must address', color: '#ef4444' },
 ]
 
-export default function NewHandoff() {
+function NewHandoffInner() {
   const router = useRouter()
   const [staffName, setStaffName] = useState('')
   const [shiftDate, setShiftDate] = useState(new Date().toISOString().split('T')[0])
@@ -129,5 +129,13 @@ export default function NewHandoff() {
         {loading ? 'Saving...' : 'Submit handoff'}
       </button>
     </main>
+  )
+}
+
+export default function NewHandoff() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <NewHandoffInner />
+    </Suspense>
   )
 }

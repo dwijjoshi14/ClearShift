@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { getSupabase, Handoff, FlagLevel } from '@/app/lib/supabase'
@@ -33,7 +33,7 @@ function generateSummary(flag_level: FlagLevel, open_items: string): string {
   return `Shift completed without issues${hasOpen ? ', though one item was left open for follow-up' : ''}. Incoming staff can proceed normally.`
 }
 
-export default function HandoffList() {
+function HandoffListInner() {
   const params = useSearchParams()
   const submitted = params.get('submitted')
   const [handoffs, setHandoffs] = useState<Handoff[]>([])
@@ -126,5 +126,13 @@ export default function HandoffList() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function HandoffList() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <HandoffListInner />
+    </Suspense>
   )
 }
