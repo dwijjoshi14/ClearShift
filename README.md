@@ -4,7 +4,7 @@ Structured shift handoffs for clinic and community health teams.
 
 Built for the [Mind the Product World Product Day 2025](https://www.mindtheproduct.com/) hackathon.
 
-
+![ClearShift](screenshot.png)
 
 ---
 
