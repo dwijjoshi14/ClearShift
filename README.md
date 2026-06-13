@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ClearShift
 
-## Getting Started
+Structured shift handoffs for clinic and community health teams.
 
-First, run the development server:
+Built for the [Mind the Product World Product Day 2025](https://www.mindtheproduct.com/) hackathon.
+
+---
+
+## The problem
+
+In community health and clinic settings, shift handoffs are often verbal, rushed, or written in a notes app. Critical information about clients, open tasks, and flags gets lost between shifts. The incoming person walks in blind.
+
+ClearShift gives outgoing staff a structured two-minute form to capture what happened, what's open, and how urgent it is — so the next person is never starting from zero.
+
+---
+
+## What it does
+
+- **End-of-shift form** — staff fill in what happened, any open items, and set a flag level (All clear / Heads up / Needs attention)
+- **Handoff feed** — incoming staff see the most recent handoffs in order, colour-coded by urgency
+- **AI brief** — one tap generates a plain-English summary of any handoff card, built for tired eyes at shift change
+
+---
+
+## Stack
+
+- [Next.js 16](https://nextjs.org/) — App Router, fully client-side rendered
+- [Supabase](https://supabase.com/) — Postgres database + anon API
+- [DM Sans](https://fonts.google.com/specimen/DM+Sans) + [Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif) — type pairing
+- [Vercel](https://vercel.com/) — deployment
+
+---
+
+## Running locally
+
+```bash
+git clone https://github.com/dwijjoshi14/ClearShift.git
+cd ClearShift
+npm install
+```
+
+Create a `.env.local` file in the root:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+Then:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000/handoff](http://localhost:3000/handoff).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Database
 
-## Learn More
+One table in Supabase:
 
-To learn more about Next.js, take a look at the following resources:
+```sql
+create table handoffs (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamptz default now(),
+  staff_name text not null,
+  shift_date date not null,
+  key_events text not null,
+  open_items text,
+  flag_level text check (flag_level in ('all_clear', 'heads_up', 'needs_attention')) not null
+);
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+RLS is disabled for the hackathon demo. For production use, add row-level security policies.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Project structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+app/
+  handoff/
+    page.tsx          # handoff feed (list view)
+    page.module.css
+    new/
+      page.tsx        # end-of-shift form
+      page.module.css
+  lib/
+    supabase.ts       # supabase client + types
+  globals.css
+  layout.tsx
+  page.tsx            # root redirect
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Live demo
+
+[project-ak4dq.vercel.app/handoff](https://project-ak4dq.vercel.app/handoff)
+
+---
+
+## Author
+
+**Dwij Joshi** — Mechatronics Engineering, Toronto Metropolitan University  
+[github.com/dwijjoshi14](https://github.com/dwijjoshi14) · [linkedin.com/in/dwij-joshi-14-tron](https://linkedin.com/in/dwij-joshi-14-tron)
