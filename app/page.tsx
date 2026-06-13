@@ -9,29 +9,57 @@ export default function Home() {
       alignItems: 'center',
       justifyContent: 'center',
       padding: '2rem',
-      gap: '2rem'
+      gap: '0',
+      background: 'var(--bg)',
     }}>
-      <div style={{ textAlign: 'center' }}>
-        <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>ClearShift</h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>
-          Structured shift handoffs for clinic and community health teams.
-        </p>
-      </div>
+      <p style={{
+        fontSize: '11px',
+        fontWeight: 500,
+        letterSpacing: '0.08em',
+        textTransform: 'uppercase',
+        color: 'var(--text-muted)',
+        marginBottom: '12px',
+      }}>
+        Shift handoff tool
+      </p>
+
+      <h1 style={{
+        fontSize: '2.25rem',
+        fontWeight: 600,
+        letterSpacing: '-0.5px',
+        color: 'var(--text-primary)',
+        marginBottom: '10px',
+        textAlign: 'center',
+      }}>
+        ClearShift
+      </h1>
+
+      <p style={{
+        color: 'var(--text-secondary)',
+        fontSize: '1rem',
+        textAlign: 'center',
+        maxWidth: '360px',
+        lineHeight: 1.6,
+        marginBottom: '32px',
+      }}>
+        Structured shift handoffs for clinic and community health teams.
+      </p>
 
       <div style={{
         display: 'flex',
-        gap: '1rem',
+        gap: '10px',
         flexWrap: 'wrap',
-        justifyContent: 'center'
+        justifyContent: 'center',
       }}>
         <Link href="/handoff/new" style={{
-          background: 'var(--accent)',
-          color: '#fff',
-          padding: '0.75rem 1.5rem',
+          background: 'var(--text-primary)',
+          color: 'var(--bg)',
+          padding: '10px 22px',
           borderRadius: 'var(--radius)',
           textDecoration: 'none',
           fontWeight: 500,
-          fontSize: '0.95rem'
+          fontSize: '14px',
+          letterSpacing: '-0.1px',
         }}>
           End my shift
         </Link>
@@ -39,12 +67,13 @@ export default function Home() {
         <Link href="/handoff" style={{
           background: 'var(--surface)',
           color: 'var(--text-primary)',
-          padding: '0.75rem 1.5rem',
+          padding: '10px 22px',
           borderRadius: 'var(--radius)',
           textDecoration: 'none',
           fontWeight: 500,
-          fontSize: '0.95rem',
-          border: '1px solid var(--border)'
+          fontSize: '14px',
+          letterSpacing: '-0.1px',
+          border: '1px solid var(--border)',
         }}>
           Start my shift
         </Link>
