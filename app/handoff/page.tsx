@@ -62,22 +62,24 @@ function HandoffListInner() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.container}>
-        <div className={styles.headerRow}>
-          <div>
-            <h1>Incoming handoffs</h1>
-            <p>Most recent shift first</p>
-          </div>
-          <Link href="/handoff/new" className={styles.newBtn}>
-            End my shift
-          </Link>
-        </div>
+      <nav className={styles.nav}>
+        <span className={styles.navLogo}>
+          ClearShift <span>/ handoffs</span>
+        </span>
+        <Link href="/handoff/new" className={styles.newBtn}>
+          End my shift
+        </Link>
+      </nav>
 
+      <div className={styles.container}>
         {submitted && (
           <div className={styles.toast}>
             Handoff submitted. The next person is covered.
           </div>
         )}
+
+        <p className={styles.pageLabel}>Incoming handoffs</p>
+        <p className={styles.pageTitle}>Most recent shift first</p>
 
         {loading && <p className={styles.empty}>Loading...</p>}
 
@@ -88,39 +90,45 @@ function HandoffListInner() {
         <div className={styles.list}>
           {handoffs.map(h => (
             <div key={h.id} className={`${styles.card} ${styles[h.flag_level]}`}>
-              <div className={styles.cardTop}>
-                <span className={`${styles.flagPill} ${styles[h.flag_level]}`}>
-                  <span className={styles.dot} />
-                  {FLAG_LABELS[h.flag_level]}
-                </span>
-                <span className={styles.meta}>
-                  {h.staff_name} · {formatDate(h.shift_date)}
-                </span>
-              </div>
-
-              <div className={styles.section}>
-                <p className={styles.sectionLabel}>What happened</p>
-                <p className={styles.sectionText}>{h.key_events}</p>
-              </div>
-
-              <div className={styles.section}>
-                <p className={styles.sectionLabel}>Open items</p>
-                <p className={styles.sectionText}>{h.open_items}</p>
-              </div>
-
-              {summaries[h.id] ? (
-                <div className={styles.summaryBox}>
-                  <p className={styles.sectionLabel}>AI brief</p>
-                  <p className={styles.sectionText}>{summaries[h.id]}</p>
+              <div className={styles.cardAccent} />
+              <div className={styles.cardInner}>
+                <div className={styles.cardTop}>
+                  <span className={`${styles.flagPill} ${styles[h.flag_level]}`}>
+                    <span className={styles.dot} />
+                    {FLAG_LABELS[h.flag_level]}
+                  </span>
+                  <span className={styles.meta}>
+                    <span className={styles.metaName}>{h.staff_name}</span>
+                    <span>·</span>
+                    {formatDate(h.shift_date)}
+                  </span>
                 </div>
-              ) : (
-                <button
-                  className={styles.summarizeBtn}
-                  onClick={() => handleSummarize(h)}
-                >
-                  Summarize
-                </button>
-              )}
+
+                <div className={styles.sections}>
+                  <div className={styles.section}>
+                    <p className={styles.sectionLabel}>What happened</p>
+                    <p className={styles.sectionText}>{h.key_events}</p>
+                  </div>
+                  <div className={styles.section}>
+                    <p className={styles.sectionLabel}>Open items</p>
+                    <p className={styles.sectionText}>{h.open_items}</p>
+                  </div>
+                </div>
+
+                {summaries[h.id] ? (
+                  <div className={styles.summaryBox}>
+                    <p className={styles.summaryLabel}>AI brief</p>
+                    <p className={styles.summaryText}>{summaries[h.id]}</p>
+                  </div>
+                ) : (
+                  <button
+                    className={styles.summarizeBtn}
+                    onClick={() => handleSummarize(h)}
+                  >
+                    Summarize shift
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -131,7 +139,7 @@ function HandoffListInner() {
 
 export default function HandoffList() {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<p style={{ padding: '2rem', color: '#9B9B91', fontSize: '13px' }}>Loading...</p>}>
       <HandoffListInner />
     </Suspense>
   )
